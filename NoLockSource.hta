@@ -1,0 +1,64 @@
+<HTML>
+<HEAD>
+<title id=title>NoLock</title>
+   <HTA:APPLICATION
+   ID = "noLock"
+   APPLICATIONNAME = "NoLock"
+   BORDER = "thick"
+   CAPTION = "yes"
+   ICON = "#"
+   SHOWINTASKBAR = "yes"
+   SINGLEINSTANCE = "yes"
+   SYSMENU = "yes"
+   WINDOWSTATE = "normal"
+   SCROLL = "no"
+   SCROLLFLAT = "yes"
+   VERSION = "1.0"
+   INNERBORDER = "yes"
+   SELECTION = "no"
+   MAXIMIZEBUTTON = "yes"
+   MINIMIZEBUTTON = "yes"
+   NAVIGABLE = "yes"
+   CONTEXTMENU = "yes"
+   BORDERSTYLE = "normal"
+   >
+
+   <SCRIPT language="vbscript">
+   Dim iTimerID
+   
+   sub MainLock
+   window.resizeTo 240,175
+   DataArea.InnerHTML = "<b>disabled<br>"
+   end sub
+   
+   Sub ByeLock
+   self.close()
+   End Sub
+   
+   sub NoLock
+   DataArea.InnerHTML = "<b>enabled<br>"
+   iTimerID = window.setInterval("NumItUp", 600*1000)
+   end sub
+   
+   sub NumItUp
+
+   set wsc = CreateObject("wscript.shell")
+   wsc.SendKeys ("{SCROLLLOCK 2}")
+   end sub
+   
+   sub ClearLock
+   window.clearInterval(iTimerID)
+   DataArea.InnerHTML = "<b>disabled<br>"
+   end sub
+   
+   </SCRIPT>
+
+</HEAD>
+<BODY onLoad="MainLock()">
+</BODY>
+<button type="button" onClick="NoLock" style="width:200px">Enable NoLock</button><br>
+<button type="button" onClick="ClearLock" style="width:200px">Disable NoLock</button><br>
+<button type="button" onClick="ByeLock" style="width:200px">Exit</button><br>
+<p>
+Current Status is: <span id = "DataArea"></span>
+</HTML>
